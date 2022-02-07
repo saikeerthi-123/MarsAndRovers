@@ -16,18 +16,9 @@ public class MarsRover {
             int positionLineIndex = i * 2 + 1;
             int commandLineIndex = positionLineIndex + 1;
 
-            int[] position = getInititalPosition(lines[positionLineIndex]);
+            int[] position = inititalPosition(lines[positionLineIndex]);
 
-            String direction;
-
-            try {
-                direction = lines[positionLineIndex].split(" ")[2];
-                if (!Arrays.asList("N", "E", "S", "W").contains(direction)) {
-                    throw new IllegalArgumentException();
-                }
-            } catch (RuntimeException e) {
-                throw new IllegalArgumentException("Could not parse direction from: " + lines[positionLineIndex]);
-            }
+            String direction = initialDirection(lines[positionLineIndex]);
 
             String[] commandArray = lines[commandLineIndex].split("(?!^)");
 
@@ -68,7 +59,21 @@ public class MarsRover {
         return out;
     }
 
-    private static int[] getInititalPosition(String lines) {
+    private static String initialDirection(String lines) {
+        String direction;
+
+        try {
+            direction = lines.split(" ")[2];
+            if (!Arrays.asList("N", "E", "S", "W").contains(direction)) {
+                throw new IllegalArgumentException();
+            }
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException("Could not parse direction from: " + lines);
+        }
+        return direction;
+    }
+
+    private static int[] inititalPosition(String lines) {
         int xWidth, yWidth;
 
         try {
