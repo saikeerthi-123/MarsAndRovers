@@ -16,18 +16,7 @@ public class MarsRover {
             int positionLineIndex = i * 2 + 1;
             int commandLineIndex = positionLineIndex + 1;
 
-            int xWidth, yWidth;
-
-            try {
-                String[] split = lines[positionLineIndex].split(" ");
-
-                xWidth = Integer.parseInt(split[0]);
-                yWidth = Integer.parseInt(split[1]);
-            } catch (RuntimeException e) {
-                throw new IllegalArgumentException("Could not parse position from: " + lines[positionLineIndex]);
-            }
-
-            int[] position = new int[]{xWidth, yWidth};
+            int[] position = getInititalPosition(lines[positionLineIndex]);
 
             String direction;
 
@@ -77,6 +66,22 @@ public class MarsRover {
         }
 
         return out;
+    }
+
+    private static int[] getInititalPosition(String lines) {
+        int xWidth, yWidth;
+
+        try {
+            String[] split = lines.split(" ");
+
+            xWidth = Integer.parseInt(split[0]);
+            yWidth = Integer.parseInt(split[1]);
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException("Could not parse position from: " + lines);
+        }
+
+        int[] position = new int[]{xWidth, yWidth};
+        return position;
     }
 
 }
