@@ -4,8 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MarsRover {
+    Position position;
+    Direction direction;
+    List<Commands> commands;
 
-    public String run(String input) {
+
+    public String run(String input) throws InvalidPositionException {
         String out = "";
 
         String[] lines = input.split("\n");
@@ -16,9 +20,9 @@ public class MarsRover {
             int positionLineIndex = i * 2 + 1;
             int commandLineIndex = positionLineIndex + 1;
 
-            int[] position = inititalPosition(lines[positionLineIndex]);
+            Position position = InputParse.inititalPosition(lines[positionLineIndex]);
 
-            String direction = initialDirection(lines[positionLineIndex]);
+            String direction = InputParse.initialDirection(lines[positionLineIndex]);
 
             String[] commandArray = lines[commandLineIndex].split("(?!^)");
 
@@ -31,7 +35,7 @@ public class MarsRover {
 
             for (String command : commandArray) {
                 if (command.equals("M")) {
-                    int[] newPosition = position;
+                    int[] newPosition = new int[2];
 
                     if (direction.equals("N")) {
                         newPosition[1] += +1;
@@ -43,7 +47,7 @@ public class MarsRover {
                         newPosition[0] += -1;
                     }
 
-                    position = newPosition;
+//                    position = newPosition;
                 } else if (command.equals("R")) {
                     List<String> all = Arrays.asList("N", "E", "S", "W");
                     direction = all.get((all.indexOf(direction) + 1) % all.size());
@@ -53,40 +57,13 @@ public class MarsRover {
                 }
             }
 
-            out += position[0] + " " + position[1] + " " + direction + "\n";
+//            out += position[0] + " " + position[1] + " " + direction + "\n";
         }
 
         return out;
     }
 
-    private static String initialDirection(String lines) {
-        String direction;
 
-        try {
-            direction = lines.split(" ")[2];
-            if (!Arrays.asList("N", "E", "S", "W").contains(direction)) {
-                throw new IllegalArgumentException();
-            }
-        } catch (RuntimeException e) {
-            throw new IllegalArgumentException("Could not parse direction from: " + lines);
-        }
-        return direction;
-    }
 
-    private static int[] inititalPosition(String lines) {
-        int xWidth, yWidth;
-
-        try {
-            String[] split = lines.split(" ");
-
-            xWidth = Integer.parseInt(split[0]);
-            yWidth = Integer.parseInt(split[1]);
-        } catch (RuntimeException e) {
-            throw new IllegalArgumentException("Could not parse position from: " + lines);
-        }
-
-        int[] position = new int[]{xWidth, yWidth};
-        return position;
-    }
 
 }

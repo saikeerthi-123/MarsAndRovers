@@ -17,22 +17,22 @@ public class MarsRoverTest {
     }
 
     @Test
-    public void shouldMoveRoverAround() {
+    public void shouldMoveRoverAround() throws InvalidPositionException {
         assertThat(rover.run("5 5\n" + "1 1 N\n" + "MM\n"), is("1 3 N\n"));
     }
 
     @Test
-    public void shouldTurnRoverRight() {
+    public void shouldTurnRoverRight() throws InvalidPositionException {
         assertThat(rover.run("5 5\n" + "1 1 N\n" + "RRR\n"), is("1 1 W\n"));
     }
 
     @Test
-    public void shouldTurnRoverLeft() {
+    public void shouldTurnRoverLeft() throws InvalidPositionException {
         assertThat(rover.run("5 5\n" + "1 1 N\n" + "LLL\n"), is("1 1 E\n"));
     }
 
     @Test
-    public void shouldMoveMultipleRoversCorrectly() {
+    public void shouldMoveMultipleRoversCorrectly() throws InvalidPositionException {
         String in = "5 5\n" +
                 "1 2 N\n" +
                 "LMLMLMLMM\n" +
